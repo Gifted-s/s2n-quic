@@ -107,7 +107,7 @@ fn write_sized_generic_u32<'a, const LEN: usize>(state: &mut State, bytes: &'a [
 #[inline]
 #[cfg(all(feature = "once_cell", not(any(kani, miri))))]
 fn probe_write_large() -> LargeWriteFn {
-    static LARGE_WRITE_FN: once_cell::sync::Lazy<LargeWriteFn> = once_cell::sync::Lazy::new(|| {
+    static LARGE_WRITE_FN: std::sync::LazyLock<LargeWriteFn> = std::sync::LazyLock::new(|| {
         #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
         {
             if let Some(fun) = x86::probe() {

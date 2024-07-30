@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use core::fmt;
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 use prost::Message;
 use s2n_quic::provider::event::{events, Timestamp};
 use std::{
@@ -632,8 +632,8 @@ static QUERIES: &[(&str, Type, Q)] = &[
     }),
 ];
 
-pub static QUERY_NAMES: Lazy<Vec<&'static str>> =
-    Lazy::new(|| QUERIES.iter().map(|q| q.0).collect());
+pub static QUERY_NAMES: LazyLock<Vec<&'static str>> =
+    LazyLock::new(|| QUERIES.iter().map(|q| q.0).collect());
 
 #[derive(Clone, Copy)]
 pub struct Query {

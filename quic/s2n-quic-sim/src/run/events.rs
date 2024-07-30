@@ -3,7 +3,7 @@
 
 use crate::stats::{Connection, Parameters};
 use core::time::Duration;
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 use s2n_quic::{
     connection,
     provider::{
@@ -16,7 +16,7 @@ use std::sync::{
     Arc,
 };
 
-static IDS: Lazy<Arc<AtomicU64>> = Lazy::new(Default::default);
+static IDS: LazyLock<Arc<AtomicU64>> = LazyLock::new(Default::default);
 
 static IS_OPEN: AtomicBool = AtomicBool::new(true);
 
